@@ -18,11 +18,15 @@ class EasyImageView extends StatefulWidget {
   /// an interaction.
   final void Function(double)? onScaleChanged;
 
+  /// Tag for Hero Animation
+  final Object? heroTag;
+
   /// Create a new instance
   /// The optional [doubleTapZoomable] boolean defaults to false and allows double tap to zoom.
   const EasyImageView({
     Key? key,
     required this.imageProvider,
+    required this.heroTag,
     this.minScale = 1.0,
     this.maxScale = 5.0,
     this.doubleTapZoomable = false,
@@ -52,7 +56,10 @@ class _EasyImageViewState extends State<EasyImageView>
 
   @override
   Widget build(BuildContext context) {
-    final image = Image(image: widget.imageProvider);
+    final image = Image(
+      image: widget.imageProvider,
+      filterQuality: FilterQuality.high,
+    );
     return SizedBox.expand(
         key: const Key('easy_image_sized_box'),
         child: InteractiveViewer(
@@ -64,8 +71,8 @@ class _EasyImageViewState extends State<EasyImageView>
               ? GestureDetector(
                   onDoubleTapDown: _handleDoubleTapDown,
                   onDoubleTap: _handleDoubleTap,
-                  child: image)
-              : image,
+                  child: _buildHero(tag: widget.heroTag, child: image))
+              : _buildHero(tag: widget.heroTag, child: image),
           onInteractionEnd: (scaleEndDetails) {
             double scale = _transformationController.value.getMaxScaleOnAxis();
 
@@ -74,6 +81,10 @@ class _EasyImageViewState extends State<EasyImageView>
             }
           },
         ));
+  }
+
+  Widget _buildHero({required Object? tag, required Widget child}) {
+    return tag == null ? child : Hero(tag: tag, child: child);
   }
 
   void _handleDoubleTapDown(TapDownDetails details) {

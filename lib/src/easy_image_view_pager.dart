@@ -18,6 +18,9 @@ class EasyImageViewPager extends StatefulWidget {
   final PageController pageController;
   final bool doubleTapZoomable;
 
+  /// Tag for Hero Animation
+  final Object? heroTag;
+
   /// Callback for when the scale has changed, only invoked at the end of
   /// an interaction.
   final void Function(double)? onScaleChanged;
@@ -30,6 +33,7 @@ class EasyImageViewPager extends StatefulWidget {
       required this.easyImageProvider,
       required this.pageController,
       this.doubleTapZoomable = false,
+      required this.heroTag,
       this.onScaleChanged})
       : super(key: key);
 
@@ -53,6 +57,7 @@ class _EasyImageViewPagerState extends State<EasyImageViewPager> {
       itemBuilder: (context, index) {
         final image = widget.easyImageProvider.imageBuilder(context, index);
         return EasyImageView(
+          heroTag: widget.heroTag,
           key: Key('easy_image_view_$index'),
           imageProvider: image,
           doubleTapZoomable: widget.doubleTapZoomable,

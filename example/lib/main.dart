@@ -95,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 2.0,
             child: EasyImageViewPager(
+                heroTag: "ImageHero",
                 easyImageProvider: _easyEmbeddedImageProvider,
                 pageController: _pageController),
           ),

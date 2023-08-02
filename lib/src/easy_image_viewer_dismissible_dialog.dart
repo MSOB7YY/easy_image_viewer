@@ -19,6 +19,7 @@ class EasyImageViewerDismissibleDialog extends StatefulWidget {
   final Color backgroundColor;
   final String closeButtonTooltip;
   final Color closeButtonColor;
+  final Object? heroTag;
 
   /// Refer to [showImageViewerPager] for the arguments
   const EasyImageViewerDismissibleDialog(this.imageProvider,
@@ -31,7 +32,8 @@ class EasyImageViewerDismissibleDialog extends StatefulWidget {
       this.doubleTapZoomable = false,
       required this.backgroundColor,
       required this.closeButtonTooltip,
-      required this.closeButtonColor})
+      required this.closeButtonColor,
+      required this.heroTag})
       : super(key: key);
 
   @override
@@ -95,6 +97,7 @@ class _EasyImageViewerDismissibleDialogState
                 alignment: Alignment.center,
                 children: <Widget>[
                   EasyImageViewPager(
+                      heroTag: widget.heroTag,
                       easyImageProvider: widget.imageProvider,
                       pageController: _pageController,
                       doubleTapZoomable: widget.doubleTapZoomable,
